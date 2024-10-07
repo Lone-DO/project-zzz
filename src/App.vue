@@ -10,6 +10,9 @@ import { RouterLink, RouterView } from 'vue-router';
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/bangboo">Bangboo</RouterLink>
+        <RouterLink to="/character">Characters</RouterLink>
+        <RouterLink to="/movie">Movies</RouterLink>
       </nav>
     </div>
   </header>
@@ -17,7 +20,7 @@ import { RouterLink, RouterView } from 'vue-router';
     <RouterView />
   </main>
   <footer>
-    <i>insert copyright message</i>
+    <i>This Project is not affiliated with HoYoverse and all assets are the property of their respective owners.</i>
   </footer>
 </template>
 
