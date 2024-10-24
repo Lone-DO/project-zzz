@@ -1,12 +1,6 @@
-interface story {
-  acts: Array<string>
-  chapter: string
-  imgSource: string
-  name: string
-  wiki: string
-}
+import type { IStory } from '../common/interfaces'
 
-export const stories: Array<story> = [
+export const data: Array<IStory> = [
   {
     name: 'Mole in the Hole',
     chapter: 'Agent Story',
@@ -97,4 +91,4 @@ export const specials = [
   }
 ]
 
-export default [...stories, ...specials]
+export default [...data, ...specials]

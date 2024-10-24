@@ -1,4 +1,4 @@
-const genres: Array<string> = [
+const data: Array<string> = [
   'Action',
   'Adventure',
   'Advert',
@@ -17,4 +17,4 @@ const genres: Array<string> = [
   'Urban'
 ]
 
-export default genres;
+export default data

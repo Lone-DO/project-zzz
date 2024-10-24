@@ -1,13 +1,6 @@
-interface video {
-  name: string
-  genre: string
-  description: string
-  imgSource: string
-  wiki: string
-  level: number
-}
+import type { IMovie } from '../common/interfaces'
 
-const videos: Array<video> = [
+const data: Array<IMovie> = [
   {
     name: 'Starlight Knight',
     genre: 'Action',
@@ -363,4 +356,4 @@ For an extra fee, you can even play the songs you like on demand.`,
   }
 ]
 
-export default videos
+export default data

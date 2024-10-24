@@ -1,12 +1,6 @@
-interface story {
-  acts: Array<string>
-  chapter: string
-  imgSource: string
-  name: string
-  wiki: string
-}
+import type { IStory } from '../common/interfaces'
 
-const genres: Array<story> = [
+const data: Array<IStory> = [
   {
     name: 'Business x Strangeness x Justness',
     chapter: 'prologue',
@@ -170,4 +164,4 @@ const genres: Array<story> = [
   }
 ]
 
-export default genres
+export default data
