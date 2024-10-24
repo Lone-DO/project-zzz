@@ -21,7 +21,7 @@ const videos: Array<video> = [
     name: "Don't Touch",
     genre: 'Fantasy',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Don%27t_Touch',
-    imgSource: 'src/assets/img/covers/Videotape_Don%27t_Touch.webp',
+    imgSource: "src/assets/img/covers/Videotape_Don'tTouch.webp",
     description: `The sudden visit of beings from off-planet does not bring the conflict that was expected: these alien beings are slow to act and intellectually inferior. Dr. Samier, who is in charge of the investigation, discovers that they have a very special ability — touch. After touching anything, they are able to imitate and change into it. The investigation team led by Dr. Samier begins a new research program to try to transform the aliens into human controllable "tools" and even "resources." What the team doesn't know is that the first target the aliens came into contact with on Earth was Dr. Samier himself.
 Although not branded as a suspense film, it has been called a fantasy film that few people can understand in one go. When the identity of the Doctor is revealed, the audience's fear of the extraterrestrials gradually changes to confusion— "There were no humans from the beginning?"`,
     level: 1
@@ -101,7 +101,7 @@ It has the feel of a public service announcement. The host changes every episode
     genre: 'Romantic',
     description:
       'Tells the tale of a beautiful lady: Monica, who has lost her memory, and the various stories that unfold in a strange city. Bold performances and scenes made it quite popular.',
-    imgSource: 'src/assets/img/covers/Videotape_Oh%7E_Sweetie.webp',
+    imgSource: 'src/assets/img/covers/Videotape_Oh_Sweetie.webp',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Oh~_Sweetie',
     level: 2
   },
@@ -130,7 +130,7 @@ Well received by a wide audience (except for with the HIA), this blockbuster fea
     genre: 'Documentary',
     description:
       'Using the beloved image of Bangboo, the TV program teaches children about avoiding the Hollow in an entertaining way. Any number of "accidents" can happen during a live show, but the host always uses some wonderful reasoning to turn things around. Many people believe these "accidents" are scripted parts of the show.',
-    imgSource: 'src/assets/img/covers/Videotape_Bangboo_knows%21.webp',
+    imgSource: 'src/assets/img/covers/Videotape_Bangboo_knows.webp',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Bangboo_knows!',
     level: 2
   },
@@ -251,7 +251,7 @@ It was once banned by a company in New Eridu on the grounds it was "showing a be
     genre: 'Family',
     description: `Portrays the life of the Carl family. Depicting the joys and sorrows of their life, from starting out in society to becoming a parent, from the birth of their child to that child entering school... Everything seems ordinary and trivial but also wholesome and touching... Oh, and there's Bangboo.
 
-A unique sitcom featuring an all-Bangboo cast. The production team specially customized many Bangbo models of different sizes so that the Carl family look a little "older" each season. Its unique funny style has attracted a large audience, particularly with children.`,
+A unique sitcom featuring an all-Bangboo cast. The production team specially customized many Bangboo models of different sizes so that the Carl family look a little "older" each season. Its unique funny style has attracted a large audience, particularly with children.`,
     imgSource: 'src/assets/img/covers/Videotape_TreCarls.webp',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/TreCarls',
     level: 3
@@ -288,7 +288,7 @@ Joseph, a stunt pilot, decides to perform a highly risky stunt to prove his love
   {
     name: 'Never Overtime',
     genre: 'Fantasy',
-    description: `A nonsensical office worker finds himself employed at a cruel company known as Olympus. No matter what he does, he can never get off work on time. He decides it's time to fight back, and so together with the "Teambuilding Goddess Athena," "Overtime Fitness Nut Ares," and "Holder of Overnight Meetings Hermes," this office worker plans on starting a war. Their ultimate goal? Get off work on time.`,
+    description: `A nonsensical office worker finds himself employed at a cruel company known as Olympus. No matter what he does, he can never get off work on time. He decides it's time to fight back, and so together with the "TeamBuilding Goddess Athena," "Overtime Fitness Nut Ares," and "Holder of Overnight Meetings Hermes," this office worker plans on starting a war. Their ultimate goal? Get off work on time.`,
     imgSource: 'src/assets/img/covers/Videotape_Never_Overtime.webp',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Never_Overtime',
     level: 3
@@ -328,7 +328,7 @@ Unlike similar films, the storyline of "Unlimited Players" is not "the protagoni
     genre: 'Disaster',
     description:
       'A scientist from the old civilization is "transported" through time to the peak of the Hollow disaster period due to an accident that occurred during his research. Now, he is looking for a way to return to the past, while also trying to help people in this time period resist the Hollow.',
-    imgSource: "src/assets/img/covers/Videotape_Rookie's_Guide_to_the_Hollow.webp",
+    imgSource: `src/assets/img/covers/Videotape_Rookie's_Guide_to_the_Hollow.webp`,
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Rookie%27s_Guide_to_the_Hollow',
     level: 3
   },
