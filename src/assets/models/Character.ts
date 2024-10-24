@@ -1,5 +1,9 @@
+interface Character {
+  id: number | null
+}
+
 class Character {
-  constructor(data) {
+  constructor(data: Character) {
     this.id = data.id || null
   }
 }
