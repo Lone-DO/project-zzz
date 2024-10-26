@@ -24,4 +24,8 @@ import { RouterLink, RouterView } from 'vue-router';
   </footer>
 </template>
 
-<style lang='scss'></style>
+<style lang='scss' scoped>
+main {
+  padding: 16px;
+}
+</style>

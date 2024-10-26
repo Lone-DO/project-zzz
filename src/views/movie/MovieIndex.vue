@@ -20,9 +20,7 @@ watch(
     <header>
       <h1>Movies</h1>
     </header>
-    <div id='movies__content'>
-      <MovieDetails v-if="movieId" />
-      <MovieList v-else />
-    </div>
+    <MovieDetails v-if="movieId" />
+    <MovieList v-else />
   </section>
 </template>
