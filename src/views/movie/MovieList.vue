@@ -1,5 +1,5 @@
-<script setup>
-import data from '@/assets/data';
+<script setup lang='ts'>
+import data from '@/assets/data/index';
 import MovieCard from './_MovieCard.vue';
 
 </script>
