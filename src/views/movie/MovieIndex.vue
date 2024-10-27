@@ -1,17 +1,13 @@
 <script setup>
 /** General */
 import { useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import { computed } from 'vue'
 const route = useRoute();
 /** Components */
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
 /** Setup */
-const movieId = ref();
-watch(
-  () => route.params.id,
-  newId => (movieId.value = newId)
-)
+const movieId = computed(() => route.params.id);
 
 </script>
 
@@ -20,7 +16,38 @@ watch(
     <header>
       <h1>Movies</h1>
     </header>
-    <MovieDetails v-if="movieId" />
-    <MovieList v-else />
+    <aside>
+      <MovieDetails :movieId />
+    </aside>
+    <MovieList />
   </section>
 </template>
+
+<style lang='scss' scoped>
+#movies {
+  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  background: repeating-linear-gradient(45deg, rgba(222, 199, 1, .1), transparent 10px);
+
+  header {
+    flex: 100%;
+  }
+
+  aside {
+    flex: 100%;
+
+    @media (min-width:600px) {
+      flex: 40%;
+      min-width: 300px;
+      max-width: 500px;
+    }
+  }
+
+  &>*:last-child {
+    flex: 50%;
+  }
+}
+</style>
