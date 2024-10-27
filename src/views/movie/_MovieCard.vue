@@ -1,19 +1,28 @@
 <script setup lang='ts'>
+import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { IMovie } from '@/assets/common/interfaces'
 
-
+const router = useRouter();
+const route = useRoute();
 /** General */
-defineProps({
+const props = defineProps({
   movie: { type: Object as PropType<IMovie>, required: true },
 })
+
+const selectMovie = () => {
+  return router.push({ name: 'movie', params: { id: props.movie.name } })
+}
+
+const isActive = computed(() => route.params.id === props.movie.name)
 
 </script>
 
 <template>
   <article class='movie-card'>
     <h3>{{ movie.name }}</h3>
-    <div class='movie-card__vhs'>
+    <div class='movie-card__vhs' :data-active='isActive' @click='selectMovie()'>
       <img class='movie-card__vhs-tape' src='@/assets/img/vhs.svg' />
       <img class='movie-card__vhs-cover' :src="movie.imgSource" :alt='`${movie.name}-img`'>
     </div>
@@ -21,15 +30,12 @@ defineProps({
 </template>
 
 <style lang='scss' scoped>
-$COVER_WIDTH: 182px;
-$HIGHLIGHT_BORDER: #DEC701 2px solid;
-
 .movie-card {
   text-align: center;
 
   h3 {
     color: #FFF;
-    font-weight: 700;
+    font-weight: $FONT_WEIGHT;
     text-transform: capitalize;
   }
 
@@ -45,7 +51,8 @@ $HIGHLIGHT_BORDER: #DEC701 2px solid;
       border-radius: 6px;
     }
 
-    &:hover {
+    &:hover,
+    &[data-active="true"] {
       outline: $HIGHLIGHT_BORDER
     }
 
