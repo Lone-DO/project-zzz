@@ -11,7 +11,7 @@ interface IMovie {
   description: string
   imgSource: string
   wiki: string
-  level: number
+  level: number | null
 }
 
 export type { IStory, IMovie }

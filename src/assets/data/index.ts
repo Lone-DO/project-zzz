@@ -1,5 +1,5 @@
 import chapters from './chapters'
-import genres from './chapters'
+import genres from './genres'
 import stories from './stories'
 import movies from './movies'
 
