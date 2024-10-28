@@ -49,8 +49,10 @@ function isActive(type: string) {
 </template>
 
 <style lang='scss' scoped>
+$MAX_HEIGHT: calc(100vh - var(--main-height-offset));
+
 header {
-  width: 100%;
+  padding: 16px 32px;
 
   nav {
     gap: 16px;
@@ -70,19 +72,18 @@ header {
 }
 
 header,
-main {
-  padding: 16px 32px;
+main,
+footer {
+  width: 100%;
   background-color: black;
 }
 
 footer {
-  width: 100%;
   text-align: center;
-  background-color: black;
 }
 
 main {
   width: 100%;
-  height: calc(100vh - var(--main-height-offset));
+  height: $MAX_HEIGHT;
 }
 </style>

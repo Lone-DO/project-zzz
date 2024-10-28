@@ -28,23 +28,37 @@ function submit(movie: Movie) {
 
 <template>
   <section id='movies'>
-    <aside>
-      <MovieDetails :movieId @create='create()' @cancel='cancel()' @submit='submit($event)' />
-    </aside>
-    <MovieList />
+    <div id='movies__content'>
+      <aside>
+        <MovieDetails :movieId @create='create()' @cancel='cancel()' @submit='submit($event)' />
+      </aside>
+      <MovieList />
+    </div>
   </section>
 </template>
 
 <style lang='scss' scoped>
 #movies {
-  gap: 16px;
   width: 100%;
-  padding: 16px;
-  display: flex;
-  flex-wrap: wrap;
   border-radius: 6px;
-  justify-content: space-between;
-  background: repeating-linear-gradient(45deg, rgba(222, 199, 1, .1), transparent 10px);
+  background-image: url('/src/assets/img/movie-background.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &__content {
+    width: 100%;
+    gap: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 6px;
+    justify-content: space-between;
+    backdrop-filter: brightness(0.25);
+    background: repeating-linear-gradient(45deg, rgba(222, 199, 1, .1), transparent 10px);
+
+    &>*:last-child {
+      flex: 50%;
+    }
+  }
 
   header {
     flex: 100%;
@@ -60,8 +74,6 @@ function submit(movie: Movie) {
     }
   }
 
-  &>*:last-child {
-    flex: 50%;
-  }
+
 }
 </style>

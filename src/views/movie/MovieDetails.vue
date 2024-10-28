@@ -12,6 +12,8 @@ const props = defineProps({
 })
 
 const movie = ref();
+const isNew = computed(() => props.movieId === 'new')
+let isEditing = ref(!!isNew.value)
 
 /** Watchers */
 watch(
@@ -20,11 +22,9 @@ watch(
   { immediate: true }
 )
 
-watch(() => props.movieId, (id) => (isEditing.value = Boolean(id === 'new')))
+watch(isNew, (bool) => (isEditing.value = bool))
 
 /** Form Setup */
-const isNew = computed(() => props.movieId === 'new')
-let isEditing = ref(Boolean(isNew))
 function submit() {
   emit('submit', movie.value)
   cancel()
@@ -37,13 +37,15 @@ function cancel() {
 
 <template>
   <form id='movie-details' action="submit" @submit.prevent="submit">
-    <h2 class='movie-details__title'>{{ movie.name }}</h2>
-    <MovieGenre v-model='movie.genre' label='Video Genre' :readonly='!isEditing'>
-      <template #affix>
-        <span>Lv.{{ movie.level }}</span>
-      </template>
-    </MovieGenre>
-    <MovieDescription v-model='movie.description' label='Video Description' :readonly='!isEditing' />
+    <template v-if='isEditing || props.movieId'>
+      <h2 class='movie-details__title'>{{ movie.name }}</h2>
+      <MovieGenre v-model='movie.genre' label='Video Genre' :readonly='!isEditing'>
+        <template #affix>
+          <span>Lv.{{ movie.level }}</span>
+        </template>
+      </MovieGenre>
+      <MovieDescription v-model='movie.description' label='Video Description' :readonly='!isEditing' />
+    </template>
     <div id='movie-details__controller'>
       <z-button v-show='!isEditing && !isNew && props.movieId' icon='pencil' mode='info'
         @click='isEditing = true'>Edit</z-button>
@@ -60,7 +62,7 @@ function cancel() {
   height: 100%;
   color: #FFF;
   display: flex;
-  padding: 0 16px;
+  padding: 16px;
   flex-direction: column;
   position: relative;
 
@@ -71,7 +73,7 @@ function cancel() {
 
   &__controller {
     position: absolute;
-    bottom: 0;
+    bottom: 16px;
     gap: 16px;
     display: flex;
   }
