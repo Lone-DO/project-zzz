@@ -13,9 +13,6 @@ const movieId = computed(() => route.params.id as string);
 
 <template>
   <section id='movies'>
-    <header>
-      <h1>Movies</h1>
-    </header>
     <aside>
       <MovieDetails :movieId />
     </aside>
@@ -26,9 +23,11 @@ const movieId = computed(() => route.params.id as string);
 <style lang='scss' scoped>
 #movies {
   gap: 16px;
+  width: 100%;
+  padding: 16px;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  border-radius: 6px;
   justify-content: space-between;
   background: repeating-linear-gradient(45deg, rgba(222, 199, 1, .1), transparent 10px);
 

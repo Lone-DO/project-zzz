@@ -1,19 +1,24 @@
 <script setup lang='ts'>
 import data from '@/assets/data/index';
-import MovieCard from './_MovieCard.vue';
+import MovieCard from './components/_MovieCard.vue';
 
 </script>
 
 <template>
-  <div id='movie-list'>
+  <ul id='movie-list'>
     <MovieCard v-for='(movie, index) in data.movies' :key='`movie-${index}`' :movie='movie' />
-  </div>
+  </ul>
 </template>
 
 <style lang='scss'>
 #movie-list {
   gap: 16px;
+  margin: 0;
+  padding: 0;
+  padding: 16px;
   display: flex;
+  height: 1000px;
+  overflow-y: auto;
   flex-wrap: wrap;
 }
 </style>
