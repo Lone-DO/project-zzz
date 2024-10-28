@@ -1,20 +1,35 @@
 <script setup lang='ts'>
 /** General */
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 const route = useRoute();
+const router = useRouter();
 /** Components */
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
+import type Movie from '@/assets/models/Movie';
 /** Setup */
-const movieId = computed(() => route.params.id as string);
+const movieId = computed(() => {
+  return route.name === 'movieNew' ? 'new' : route.params.id as string
+});
 
+function create() {
+  console.log('emit:create')
+  router.push({ name: 'movieNew' })
+}
+function cancel() {
+  console.log('emit:cancel')
+  if (movieId.value === 'new') router.push({ name: 'movies' })
+}
+function submit(movie: Movie) {
+  console.log('emit:submit', movie)
+}
 </script>
 
 <template>
   <section id='movies'>
     <aside>
-      <MovieDetails :movieId />
+      <MovieDetails :movieId @create='create()' @cancel='cancel()' @submit='submit($event)' />
     </aside>
     <MovieList />
   </section>

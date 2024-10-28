@@ -14,8 +14,7 @@ import MovieCard from './components/_MovieCard.vue';
 #movie-list {
   gap: 16px;
   margin: 0;
-  padding: 0;
-  padding: 16px;
+  padding: 0 16px;
   display: flex;
   height: 1000px;
   overflow-y: auto;
