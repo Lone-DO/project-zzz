@@ -1,16 +1,17 @@
 <script setup lang='ts'>
 
 defineProps({
-  value: { type: String, default: '' },
   label: { type: String, default: '' },
   readonly: { type: Boolean, default: false }
 })
+
+const value = defineModel<string>()
 </script>
 
 <template>
   <div id='movie-description'>
     <label v-if='label' for="description" class='subLabel'>{{ label }}</label>
-    <textarea id='description' :readonly :value />
+    <textarea v-model='value' id='description' :readonly />
   </div>
 </template>
 
