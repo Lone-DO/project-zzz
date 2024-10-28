@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang='ts'>
 import { ref, watch } from 'vue';
 import data from '@/assets/data';
 import Movie from '@/assets/models/Movie';
@@ -9,7 +9,7 @@ const props = defineProps({
   movieId: { type: String, default: '' }
 })
 
-const movie = ref(Movie);
+const movie = ref();
 const readonly = ref(true);
 
 watch(

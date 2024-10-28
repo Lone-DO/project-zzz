@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang='ts'>
 /** General */
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
@@ -7,7 +7,7 @@ const route = useRoute();
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
 /** Setup */
-const movieId = computed(() => route.params.id);
+const movieId = computed(() => route.params.id as string);
 
 </script>
 
