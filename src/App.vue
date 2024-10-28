@@ -1,8 +1,29 @@
 <script setup lang='ts'>
+import { onMounted, onUnmounted, useTemplateRef, ref, computed } from 'vue';
 import { RouterLink, RouterView, useRoute } from 'vue-router';
 
 const route = useRoute()
 
+/** Event Lister */
+const header = useTemplateRef('header')
+const footer = useTemplateRef('footer')
+let headerHeight = ref(0);
+let footerHeight = ref(0);
+
+function onResize(): void {
+  headerHeight.value = header.value?.clientHeight || 0
+  footerHeight.value = footer.value?.clientHeight || 0
+}
+
+onMounted(() => {
+  window.addEventListener('resize', onResize)
+  onResize()
+})
+onUnmounted(() => window.removeEventListener('resize', onResize))
+
+/** General */
+const injectedStyles = computed(() => ({ '--main-height-offset': `${headerHeight.value + footerHeight.value}px` }))
+/** Helpers */
 function isActive(type: string) {
   if (!type) return false;
   return type === 'home' ? route.fullPath === '/' : route.fullPath.includes(type)
@@ -10,7 +31,10 @@ function isActive(type: string) {
 </script>
 
 <template>
-  <header>
+  <main :style='injectedStyles'>
+    <RouterView />
+  </main>
+  <header ref='header'>
     <nav>
       <RouterLink to="/" :data-active='isActive("home")'>Home</RouterLink>
       <RouterLink to="/about" :data-active='isActive("about")'>About</RouterLink>
@@ -19,10 +43,7 @@ function isActive(type: string) {
       <RouterLink to="/movie" :data-active='isActive("movie")'>Movies</RouterLink>
     </nav>
   </header>
-  <main>
-    <RouterView />
-  </main>
-  <footer>
+  <footer ref='footer'>
     <i>This Project is not affiliated with HoYoverse and all assets are the property of their respective owners.</i>
   </footer>
 </template>
@@ -52,5 +73,16 @@ header,
 main {
   padding: 16px 32px;
   background-color: black;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: black;
+}
+
+main {
+  width: 100%;
+  height: calc(100vh - var(--main-height-offset));
 }
 </style>
