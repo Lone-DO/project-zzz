@@ -9,13 +9,16 @@ const props = defineProps({
 
 const injectedStyles = computed(() => ({
   '--width': props.styles.width || '125px',
+  '--height': props.styles.height || '40px',
 }))
 </script>
 
 <template>
   <button class='z-button' type='button' :style='injectedStyles' :data-mode='mode'>
-    <div v-if='icon' class='z-button__icon'>
-      <i :class='`fa-solid fa-${icon}`' />
+    <div v-if='icon' class='z-button__icon-container'>
+      <div class='z-button__icon'>
+        <i :class='`fa-solid fa-${icon}`' />
+      </div>
     </div>
     <span>
       <slot />
@@ -25,14 +28,14 @@ const injectedStyles = computed(() => ({
 
 <style lang='scss' scoped>
 .z-button {
+  position: relative;
   width: var(--width);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: black;
-  border: #afafaf46 solid 1px;
+  height: var(--height);
   border-radius: 50px;
-  padding: 16px;
+  background-color: black;
+  border: grey solid 1px;
+  text-align: right;
+  padding: 0 16px;
 
   &[data-mode="info"] &__icon {
     background-color: #2d7effc0;
@@ -54,14 +57,31 @@ const injectedStyles = computed(() => ({
   }
 
   &__icon {
-    min-width: 1.5rem;
-    min-height: 1.5rem;
+    color: black;
     background-color: green;
     padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+
+    &,
+    &-container {
+      border: grey 1px solid;
+      border-radius: 100%;
+    }
+
+    &-container {
+      width: var(--height);
+      height: var(--height);
+      top: -1px;
+      left: -1px;
+      padding: 8px;
+      min-width: 1.5rem;
+      min-height: 1.5rem;
+      position: absolute;
+    }
   }
 }
 </style>
