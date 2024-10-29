@@ -1,28 +1,38 @@
 <script setup lang='ts'>
 /** General */
 import { useRoute, useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, } from 'vue'
 const route = useRoute();
 const router = useRouter();
+/** Pinia */
+import { useMovieStore } from '@/stores/movie';
+const $store = useMovieStore()
 /** Components */
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
 import type Movie from '@/assets/models/Movie';
 /** Setup */
+onMounted(() => $store.unpack())
+onUnmounted(() => $store.pack())
+
 const movieId = computed(() => {
   return route.name === 'movieNew' ? 'new' : route.params.id as string
 });
 
-function create() {
-  console.log('emit:create')
-  router.push({ name: 'movieNew' })
+function goto(type: string, id?: string | boolean) {
+  if (type === 'new') return router.push({ name: 'movieNew' })
+  if (type === 'all') return ['new', true].includes(id || movieId.value) && router.push({ name: 'movies' })
+  if (type === 'single' && typeof id === 'string') return id !== movieId.value && router.push({ name: 'movie', params: { id } })
 }
-function cancel() {
-  console.log('emit:cancel')
-  if (movieId.value === 'new') router.push({ name: 'movies' })
+function submit(movie: Movie, id: string) {
+  $store.update(movie, id);
+  goto('single', movie.name);
 }
-function submit(movie: Movie) {
-  console.log('emit:submit', movie)
+
+function deleted(movie: Movie) {
+  console.log('deleted', movie)
+  $store.remove(movie);
+  goto('all', true)
 }
 </script>
 
@@ -30,9 +40,10 @@ function submit(movie: Movie) {
   <section id='movies'>
     <div id='movies__content'>
       <aside>
-        <MovieDetails :movieId @create='create()' @cancel='cancel()' @submit='submit($event)' />
+        <MovieDetails :movieId @create='goto("new")' @cancel='goto("all", $event)'
+          @submit='(data, id) => submit(data, id)' />
       </aside>
-      <MovieList />
+      <MovieList @select='goto("single", $event)' @deleted='deleted($event)' />
     </div>
   </section>
 </template>
@@ -46,8 +57,8 @@ function submit(movie: Movie) {
   background-size: cover;
 
   &__content {
-    width: 100%;
     gap: 16px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     border-radius: 6px;
@@ -65,9 +76,10 @@ function submit(movie: Movie) {
   }
 
   aside {
+    min-height: 500px;
     flex: 100%;
 
-    @media (min-width:600px) {
+    @media (min-width:632px) {
       flex: 40%;
       min-width: 300px;
       max-width: 500px;

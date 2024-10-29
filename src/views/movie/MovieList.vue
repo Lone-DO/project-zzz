@@ -1,13 +1,13 @@
 <script setup lang='ts'>
-import data from '@/assets/data'
 import MovieCard from './components/_MovieCard.vue';
-// import { useMovieStore } from '@/stores/movie';
-// const $store = useMovieStore()
+import { useMovieStore } from '@/stores/movie';
+const $store = useMovieStore()
 </script>
 
 <template>
   <ul id='movie-list'>
-    <MovieCard v-for='(movie, index) in data.movies' :key='`movie-${index}`' :movie='movie' />
+    <MovieCard v-for='(movie, index) in $store.movies' :key='`movie-${index}`' :movie @select='$emit("select", $event)'
+      @deleted='$emit("deleted", $event)' />
   </ul>
 </template>
 
@@ -22,5 +22,9 @@ $MAX_HEIGHT: calc(100vh - var(--main-height-offset));
   height: $MAX_HEIGHT;
   overflow-y: auto;
   flex-wrap: wrap;
+
+  &>* {
+    flex: 1;
+  }
 }
 </style>
