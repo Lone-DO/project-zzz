@@ -1,10 +1,12 @@
 <script setup lang='ts'>
 import { ref, watch, defineEmits, computed } from 'vue';
-import data from '@/assets/data';
-import Movie from '@/assets/models/Movie';
+/** Pinia */
+import { useMovieStore } from '@/stores/movie';
+const $store = useMovieStore()
+/** Components */
 import MovieGenre from './components/_MovieGenre.vue';
 import MovieDescription from './components/_MovieDescription.vue';
-
+import MovieTitle from './components/_MovieTitle.vue';
 /** General */
 const emit = defineEmits(['create', 'cancel', 'submit'])
 const props = defineProps({
@@ -17,8 +19,8 @@ let isEditing = ref(!!isNew.value)
 
 /** Watchers */
 watch(
-  () => data.movies.find(({ name = '' }) => name === props.movieId),
-  (newData) => (movie.value = new Movie(newData)),
+  () => props.movieId as string,
+  (id: string) => (movie.value = $store.getMovieById(id)),
   { immediate: true }
 )
 
@@ -26,25 +28,25 @@ watch(isNew, (bool) => (isEditing.value = bool))
 
 /** Form Setup */
 function submit() {
-  emit('submit', movie.value)
-  cancel()
+  isEditing.value = false
+  return emit('submit', movie.value, props.movieId)
 }
 function cancel() {
   isEditing.value = false
-  emit('cancel')
+  return emit('cancel')
 }
 </script>
 
 <template>
   <form id='movie-details' action="submit" @submit.prevent="submit">
     <template v-if='isEditing || props.movieId'>
-      <h2 class='movie-details__title'>{{ movie.name }}</h2>
-      <MovieGenre v-model='movie.genre' label='Video Genre' :readonly='!isEditing'>
-        <template #affix>
+      <MovieTitle v-model='movie.name' label='Title' :readonly='!isEditing' required />
+      <MovieGenre v-model='movie.genre' label='Video Genre' :readonly='!isEditing' required>
+        <template v-if='movie.level' #affix>
           <span>Lv.{{ movie.level }}</span>
         </template>
       </MovieGenre>
-      <MovieDescription v-model='movie.description' label='Video Description' :readonly='!isEditing' />
+      <MovieDescription v-model='movie.description' label='Video Description' :readonly='!isEditing' required />
     </template>
     <div id='movie-details__controller'>
       <z-button v-show='!isEditing && !isNew && props.movieId' icon='pencil' mode='info'

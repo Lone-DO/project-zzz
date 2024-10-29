@@ -1,5 +1,7 @@
 <script setup lang='ts'>
 import data from '@/assets/data'
+import { useAttrs } from 'vue';
+const attr = useAttrs();
 
 defineProps({
   label: { type: String, default: '' },
@@ -19,8 +21,8 @@ const value = defineModel<string>()
         <slot name='affix' />
       </span>
     </p>
-    <select v-else v-model='value' name="genre" id="genre-select">
-      <option value="">--Please choose an option--</option>
+    <select v-else v-model='value' name="genre" id="genre-select" v-bind='attr'>
+      <option value=''>--Please choose an option--</option>
       <option v-for='genre in data.genres' :key='genre' :value='genre' :selected='genre === value'>{{ genre }}</option>
     </select>
   </div>

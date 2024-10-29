@@ -1,5 +1,7 @@
 <script setup lang='ts'>
+import { useAttrs } from 'vue'
 
+const attr = useAttrs();
 defineProps({
   label: { type: String, default: '' },
   readonly: { type: Boolean, default: false }
@@ -11,7 +13,7 @@ const value = defineModel<string>()
 <template>
   <div id='movie-description'>
     <label v-if='label' for="description" class='subLabel'>{{ label }}</label>
-    <textarea v-model='value' id='description' :readonly />
+    <textarea v-model='value' v-bind="attr" id='description' :readonly />
   </div>
 </template>
 
