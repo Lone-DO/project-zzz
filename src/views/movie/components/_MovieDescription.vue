@@ -27,8 +27,14 @@ const value = defineModel<string>()
     font-size: 1rem;
     min-width: 100%;
     max-width: 100%;
-    min-height: 300px;
-    max-height: 600px;
+    min-height: 100px;
+    margin-bottom: 1rem;
+
+    @include TabletHeight {
+      margin-bottom: 0;
+      min-height: 300px;
+      max-height: 600px;
+    }
 
     &[readonly] {
       color: #FFF;

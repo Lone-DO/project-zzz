@@ -33,8 +33,9 @@ const value = defineModel<string>()
   display: flex;
   flex-direction: column;
 
-  *:nth-child(2) {
-    height: 32px;
+  *:nth-child(2),
+  p {
+    height: $INPUT_HEIGHT;
   }
 
   p[readonly] {

@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ref, watch, defineEmits, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 /** Pinia */
 import { useMovieStore } from '@/stores/movie';
 const $store = useMovieStore()
@@ -20,7 +20,7 @@ let isEditing = ref(!!isNew.value)
 /** Watchers */
 watch(
   () => props.movieId as string,
-  (id: string) => (movie.value = $store.getMovieById(id)),
+  (id: string) => (movie.value = $store.getMovieById(id, true)),
   { immediate: true }
 )
 
@@ -65,8 +65,10 @@ function cancel() {
   color: #FFF;
   display: flex;
   padding: 16px;
-  flex-direction: column;
+  overflow-y: auto;
   position: relative;
+  flex-direction: column;
+  height: calc(100vh - var(--main-height-offset));
 
   h2,
   &__description {
@@ -74,7 +76,7 @@ function cancel() {
   }
 
   &__controller {
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     gap: 16px;
     display: flex;
