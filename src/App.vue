@@ -34,7 +34,7 @@ function isActive(type: string) {
   <main :style='injectedStyles'>
     <RouterView />
   </main>
-  <header ref='header'>
+  <header v-show='false' ref='header'>
     <nav>
       <RouterLink to="/" :data-active='isActive("home")'>Home</RouterLink>
       <RouterLink to="/about" :data-active='isActive("about")'>About</RouterLink>

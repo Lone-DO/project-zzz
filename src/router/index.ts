@@ -9,21 +9,21 @@ const router = createRouter({
       // component: () => import('@/views/HomeView.vue'),
       redirect: () => ({ name: 'movies' })
     },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('@/views/AboutView.vue')
-    },
-    {
-      path: '/character',
-      name: 'characters',
-      component: () => import('@/views/character/CharacterIndex.vue')
-    },
-    {
-      path: '/bangboo',
-      name: 'bangboo',
-      component: () => import('@/views/bangboo/BangbooIndex.vue')
-    },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   component: () => import('@/views/AboutView.vue')
+    // },
+    // {
+    //   path: '/character',
+    //   name: 'characters',
+    //   component: () => import('@/views/character/CharacterIndex.vue')
+    // },
+    // {
+    //   path: '/bangboo',
+    //   name: 'bangboo',
+    //   component: () => import('@/views/bangboo/BangbooIndex.vue')
+    // },
     {
       path: '/movie',
       name: 'movies',
@@ -38,7 +38,8 @@ const router = createRouter({
       path: '/movie/:id',
       name: 'movie',
       component: () => import('@/views/movie/MovieIndex.vue')
-    }
+    },
+    { path: '/:pathMatch(.*)*', redirect: () => ({ name: 'home' }) }
   ]
 })
 
