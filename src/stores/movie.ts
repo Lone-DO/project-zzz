@@ -35,9 +35,10 @@ export const useMovieStore = defineStore('movie', {
     }
   },
   getters: {
-    getMovieById: (state) => (movieId: string) => {
+    getMovieById: (state) => (movieId: string, override?: boolean) => {
       const { movies } = state
-      return new Movie(movies.find(({ name }) => name === movieId))
+      const movie = movies.find(({ name }) => name === movieId)
+      return movie || override ? new Movie(movie) : null
     }
   }
 })
