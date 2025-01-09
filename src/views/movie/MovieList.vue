@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import MovieCard from './components/_MovieCard.vue';
-import { useMovieStore } from '@/stores/movie';
+import { useMovieStore } from '@zzz/stores/movie';
 const $store = useMovieStore()
 const props = defineProps({
   movieId: { type: String, default: '' }

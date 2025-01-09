@@ -1,18 +1,51 @@
-import { createApp } from 'vue'
+import {
+  defineCustomElement as VueDefineCustomElement,
+  h,
+  createApp,
+  getCurrentInstance
+} from 'vue'
+import { createWebComponent } from 'vue-web-component-wrapper'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
 import components from './components'
 
-import './assets/styles/main.scss'
+import requiredStyles from './assets/styles/main.scss?raw'
 
-const app = createApp(App)
+// const app = createApp(App)
+console.log('build:ZZZ')
+export const pluginsWrapper = {
+  install(GivenVue: any) {
+    const Vue = GivenVue
+    /** Vue Pinia */
+    const pinia = createPinia()
+    Vue.use(pinia)
+    /** Vue Router */
+    Vue.use(router)
+    /** Custom Components */
+    Vue.use(components)
+  }
+}
 
-app.use(createPinia())
-app.use(router)
+createWebComponent({
+  rootComponent: App,
+  elementName: 'project-zzz',
+  plugins: pluginsWrapper,
+  cssFrameworkStyles: requiredStyles,
+  VueDefineCustomElement,
+  h,
+  createApp,
+  getCurrentInstance,
+  // disableStyleRemoval: false, // default is false
+  disableShadowDOM: false, // default is false
+  replaceRootWithHostInCssFramework: false // default is false
+})
 
-// Bind components/ to global Vue components;
-app.use(components)
+// app.use(createPinia())
+// app.use(router)
 
-app.mount('#app')
+// // Bind components/ to global Vue components;
+// app.use(components)
+
+// app.mount('#app')

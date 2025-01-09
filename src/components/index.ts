@@ -1,4 +1,4 @@
-import zButton from './button/zButton.vue'
+import zButton from './button/ZButton.vue'
 
 const components = {
   install(Vue: any) {

@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import data from '@/assets/data'
+import data from '@zzz/assets/data'
 import { useAttrs } from 'vue';
 const attr = useAttrs();
 

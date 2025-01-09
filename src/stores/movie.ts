@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import Movie from '@/assets/models/Movie'
-import data from '@/assets/data/index'
-import type { IMovie } from '@/assets/common/interfaces'
+import Movie from '@zzz/assets/models/Movie'
+import data from '@zzz/assets/data/index'
+import type { IMovie } from '@zzz/assets/common/interfaces'
 
 export const useMovieStore = defineStore('movie', {
   state: () => ({

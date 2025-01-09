@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import type { PropType } from 'vue'
-import type { IMovie } from '@/assets/common/interfaces'
+import type { IMovie } from '@zzz/assets/common/interfaces'
 
 const route = useRoute();
 /** General */
@@ -23,8 +23,9 @@ const isOriginal = computed(() => /^\/src\/assets/gm.test(props.movie.imgSource)
     </div>
     <div class='movie-card__vhs' :data-active='isActive' :data-no-cover='Boolean(movie.imgSource)'
       @click.stop='$emit("select", movie.name)'>
-      <img class='movie-card__vhs-tape' src='@/assets/img/vhs.svg' />
-      <img v-if='movie.imgSource' class='movie-card__vhs-cover' :src="movie.imgSource" :alt='`${movie.name}-img`'>
+      <img class='movie-card__vhs-tape' src='@zzz/assets/img/vhs.svg' />
+      <img v-if='movie.imgSource' class='movie-card__vhs-cover' :src="`@zzz/assets${movie.imgSource}`"
+        :alt='`${movie.name}-img`'>
     </div>
   </article>
 </template>

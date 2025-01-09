@@ -5,7 +5,7 @@ const data: Array<IMovie> = [
     name: 'Starlight Knight',
     genre: 'Action',
     wiki: 'https://zenless-zone-zero.fandom.com/wiki/Starlight_Knight',
-    imgSource: '/src/assets/img/covers/Videotape_Starlight_Knight.webp',
+    imgSource: '/img/covers/Videotape_Starlight_Knight.webp',
     description: `After the meteor shower, it was no longer the peaceful city it once was. The appearance of evil monsters with unknown purposes plunged humanity into a great crisis. At this same time, the sworn enemy of the monsters, the Starlight Knights appeared!
       This popular special effects show reached an 11.8% rating for its finale. Its initial target audience group was children, but the excellent monster designs and cool lines led to a large number of young fans.`,
     level: 1

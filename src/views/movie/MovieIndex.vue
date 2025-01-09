@@ -5,12 +5,12 @@ import { computed, onMounted, onUnmounted, watch } from 'vue'
 const route = useRoute();
 const router = useRouter();
 /** Pinia */
-import { useMovieStore } from '@/stores/movie';
+import { useMovieStore } from '@zzz/stores/movie';
 const $store = useMovieStore()
 /** Components */
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
-import type Movie from '@/assets/models/Movie';
+import type Movie from '@zzz/assets/models/Movie';
 /** Setup */
 $store.unpack()
 onUnmounted(() => $store.pack())
