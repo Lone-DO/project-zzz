@@ -11,8 +11,7 @@ import App from './App.vue'
 import router from './router'
 import components from './components'
 
-import requiredStyles from './assets/styles/main.scss?raw'
-
+import requiredStyles from './assets/styles/main.css?raw'
 // const app = createApp(App)
 console.log('build:ZZZ')
 export const pluginsWrapper = {
@@ -39,7 +38,7 @@ createWebComponent({
   getCurrentInstance,
   // disableStyleRemoval: false, // default is false
   disableShadowDOM: false, // default is false
-  replaceRootWithHostInCssFramework: false // default is false
+  replaceRootWithHostInCssFramework: true // default is false
 })
 
 // app.use(createPinia())

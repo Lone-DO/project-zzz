@@ -1,4 +1,4 @@
-@use '@zzz/assets/styles/base.scss';
+@import './assets/styles/base.css';
 
 #app {
   width: 100vw;
