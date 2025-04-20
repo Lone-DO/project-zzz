@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { ref, watch, computed } from 'vue';
 /** Pinia */
-import { useMovieStore } from '@zzz/stores/movie';
+import { useMovieStore } from '@/stores/movie';
 const $store = useMovieStore()
 /** Components */
 import MovieGenre from './components/_MovieGenre.vue';

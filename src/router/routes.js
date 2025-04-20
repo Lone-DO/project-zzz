@@ -23,17 +23,17 @@ const routes = [
   {
     path: '/movie',
     name: 'movies',
-    component: () => import('@zzz/views/movie/MovieIndex.vue')
+    component: () => import('@/views/movie/MovieIndex.vue')
   },
   {
     path: '/movie/new',
     name: 'movieNew',
-    component: () => import('@zzz/views/movie/MovieIndex.vue')
+    component: () => import('@/views/movie/MovieIndex.vue')
   },
   {
     path: '/movie/:id',
     name: 'movie',
-    component: () => import('@zzz/views/movie/MovieIndex.vue')
+    component: () => import('@/views/movie/MovieIndex.vue')
   }
   // { path: '/:pathMatch(.*)*', redirect: () => ({ name: 'home' }) }
 ]
