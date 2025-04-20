@@ -1,16 +1,16 @@
 <script setup lang='ts'>
 /** General */
 import { useRoute, useRouter } from 'vue-router'
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted, provide, watch } from 'vue'
 const route = useRoute();
 const router = useRouter();
 /** Pinia */
-import { useMovieStore } from '@zzz/stores/movie';
+import { useMovieStore } from '@/stores/movie';
 const $store = useMovieStore()
 /** Components */
 import MovieList from './MovieList.vue';
 import MovieDetails from './MovieDetails.vue';
-import type Movie from '@zzz/assets/models/Movie';
+import type Movie from '@/assets/models/Movie';
 /** Setup */
 $store.unpack()
 onUnmounted(() => $store.pack())
@@ -39,6 +39,29 @@ function deleted(movie: Movie) {
   $store.remove(movie);
   goto('all', true)
 }
+
+/** Aggregate Imag Covers **/
+
+const coverRegex = /(.+\/covers\/)(.+)/gm
+
+function aggregateCovers() {
+  /** Aggregate all files that are named `routes.js` nested within the `modules` Directory */
+  const context = import.meta.glob('@/assets/img/covers/**/*', { eager: true, import: 'default' });
+  return Object.keys(context).reduce((covers, filePath) => {
+    const img = context[filePath]
+    const id = filePath.replace(coverRegex, '$2');
+    return { ...covers, [id]: img }
+  }, []);
+}
+
+const covers: object = aggregateCovers()
+
+provide('covers', covers);
+provide('getCover', (src = '') => {
+  const id: string = src.replace(coverRegex, '$2');
+  return (covers || {})[id as keyof object]
+});
+
 </script>
 
 <template>

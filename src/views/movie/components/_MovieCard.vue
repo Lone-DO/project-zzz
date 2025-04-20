@@ -1,14 +1,17 @@
 <script setup lang='ts'>
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import type { PropType } from 'vue'
-import type { IMovie } from '@zzz/assets/common/interfaces'
+import type { IMovie } from '@/assets/common/interfaces'
 
 const route = useRoute();
 /** General */
 const props = defineProps({
   movie: { type: Object as PropType<IMovie>, required: true },
 })
+
+const getCover: Function | undefined = inject('getCover')
+const getImgCover = (src = '') => getCover instanceof Function ? getCover(src) : src
 
 const isActive = computed(() => route.params.id === props.movie.name)
 const isOriginal = computed(() => /^\/src\/assets/gm.test(props.movie.imgSource))
@@ -23,8 +26,8 @@ const isOriginal = computed(() => /^\/src\/assets/gm.test(props.movie.imgSource)
     </div>
     <div class='movie-card__vhs' :data-active='isActive' :data-no-cover='Boolean(movie.imgSource)'
       @click.stop='$emit("select", movie.name)'>
-      <img class='movie-card__vhs-tape' src='@zzz/assets/img/vhs.svg' />
-      <img v-if='movie.imgSource' class='movie-card__vhs-cover' :src="`@zzz/assets${movie.imgSource}`"
+      <img class='movie-card__vhs-tape' src='@/assets/img/vhs.svg' />
+      <img v-if='movie.imgSource' class='movie-card__vhs-cover' :src="getImgCover(movie.imgSource)"
         :alt='`${movie.name}-img`'>
     </div>
   </article>
