@@ -14,7 +14,12 @@ import components from './components'
 import requiredStyles from './assets/styles/main.css?raw'
 // const app = createApp(App)
 console.log('build:ZZZ')
-export const pluginsWrapper = {
+
+const self = {
+  component: App,
+  components,
+  router,
+  name: 'zzz',
   install(GivenVue: any) {
     const Vue = GivenVue
     /** Vue Pinia */
@@ -27,10 +32,12 @@ export const pluginsWrapper = {
   }
 }
 
+export default self
+
 createWebComponent({
   rootComponent: App,
   elementName: 'project-zzz',
-  plugins: pluginsWrapper,
+  plugins: self,
   cssFrameworkStyles: requiredStyles,
   VueDefineCustomElement,
   h,
