@@ -1,8 +1,10 @@
 <script setup lang='ts'>
-import { onMounted, onUnmounted, useTemplateRef, ref, computed } from 'vue';
-import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured } from 'vue'
+import { RouterLink, RouterView, } from 'vue-router'
+import { useRoute, useRouter } from '@/utils'
 
 console.log('mounted')
+const router = useRouter()
 const route = useRoute()
 
 /** Event Lister */
@@ -16,6 +18,10 @@ function onResize(): void {
   footerHeight.value = footer.value?.clientHeight || 0
 }
 
+onErrorCaptured((err, vm) => {
+  console.error({ err, vm })
+})
+
 onMounted(() => {
   window.addEventListener('resize', onResize)
   onResize()
@@ -27,7 +33,7 @@ const injectedStyles = computed(() => ({ '--main-height-offset': `${headerHeight
 /** Helpers */
 function isActive(type: string) {
   if (!type) return false;
-  return type === 'home' ? route.fullPath === '/' : route.fullPath.includes(type)
+  return type === 'home' ? route?.fullPath === '/' : route?.fullPath.includes(type)
 }
 </script>
 

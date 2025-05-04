@@ -45,13 +45,18 @@ function deleted(movie: Movie) {
 const coverRegex = /(.+\/covers\/)(.+)/gm
 
 function aggregateCovers() {
-  /** Aggregate all files that are named `routes.js` nested within the `modules` Directory */
-  const context = import.meta.glob('@/assets/img/covers/**/*', { eager: true, import: 'default' });
-  return Object.keys(context).reduce((covers, filePath) => {
-    const img = context[filePath]
-    const id = filePath.replace(coverRegex, '$2');
-    return { ...covers, [id]: img }
-  }, []);
+  try {
+    /** Aggregate all files that are named `routes.js` nested within the `modules` Directory */
+    const context = import.meta.glob('../../assets/img/covers/**/*', { eager: true, import: 'default' });
+    return Object.keys(context).reduce((covers, filePath) => {
+      const img = context[filePath]
+      const id = filePath.replace(coverRegex, '$2');
+      return { ...covers, [id]: img }
+    }, []);
+  } catch (error) {
+    console.error(error)
+    return {}
+  }
 }
 
 const covers: object = aggregateCovers()

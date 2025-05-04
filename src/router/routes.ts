@@ -1,10 +1,12 @@
+// interface iRoute {
+//   path: String
+//   name: String
+//   redirect
+// }
+
+// import { type RouteRecordSingleView, type RouteRecordRedirect } from 'vue-router'
+
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    // component: () => import('@/views/HomeView.vue'),
-    redirect: () => ({ name: 'movies' })
-  },
   // {
   //   path: '/about',
   //   name: 'about',
@@ -35,6 +37,5 @@ const routes = [
     name: 'movie',
     component: () => import('@/views/movie/MovieIndex.vue')
   }
-  // { path: '/:pathMatch(.*)*', redirect: () => ({ name: 'home' }) }
 ]
 export default routes
