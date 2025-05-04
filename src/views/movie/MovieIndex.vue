@@ -9,7 +9,6 @@ import { useMovieStore } from '@/stores/movie';
 const $store = useMovieStore()
 /** Components */
 import MovieList from './MovieList.vue';
-import MovieDetails from './MovieDetails.vue';
 import type Movie from '@/assets/models/Movie';
 /** Setup */
 $store.unpack()
@@ -78,7 +77,7 @@ provide('getCover', (src = '') => {
             <i class='fa-solid fa-close' />
           </button>
         </div>
-        <MovieDetails :movieId @create='goto("new")' @cancel='goto("all", $event)'
+        <RouterView :movieId @create='goto("new")' @cancel='goto("all", $event)'
           @submit='(data, id) => submit(data, id)' />
       </aside>
       <MovieList :movieId @select='goto("single", $event)' @deleted='deleted($event)' />

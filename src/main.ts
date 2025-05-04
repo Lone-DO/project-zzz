@@ -6,14 +6,21 @@ import {
   type Component
 } from 'vue'
 import { createWebComponent } from 'vue-web-component-wrapper'
-import type { Router } from 'vue-router'
+import { createRouter, createWebHistory, type Router } from 'vue-router'
 import { createPinia } from 'pinia'
 /** General */
-import { type iRouter, default as router, plugin as routerPlugin } from './router'
-import components, { plugin as componentPlugin } from './components'
-import requiredStyles from './assets/styles/main.css?raw'
+import App from '@/App.vue'
 import def from '../package.json'
-import App from './App.vue'
+/** Assets */
+import requiredStyles from '@/assets/styles/main.css?raw'
+// ZZZ/src/assets/styles/main.css
+import Components from '@/components'
+/** Plugins */
+// import { type iRouter, default as $router, plugin as routerPlugin } from './router'
+/** Generate Route Factory before initializing Plugins */
+import _routeFactory from './router'
+const routes = _routeFactory()
+// export const routeFactory = _routeFactory
 /** Interfaces */
 interface iOptions {
   router: Router | undefined
@@ -32,64 +39,52 @@ export interface iSelf {
   config: iConfig | null
   component: Component
   components: {}
-  create: Function
-  router: iRouter
+  create?: Function
+  router: Router | null
   name: String
   instance: Component | null
   install: (app: any, options?: iOptions) => void
 }
 
 const self: iSelf = {
-  router,
+  router: createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes
+  }),
   name: 'zzz',
   config: null,
   instance: null,
   component: App,
-  components: components,
-  install(GivenVue, options) {
+  components: Components,
+  install(Vue) {
+    /** Vue Pinia */
+    Vue.use(createPinia())
+    /** Vue Router */
+    Vue.use(this.router)
+    /** Global Components Registry */
+    Vue.use(Components)
+    this.instance = Vue
     /** Register component version to Global State */
-    const { name, version, description } = def
-    console.log(name, version)
-    if (options) {
-      /** PLUGIN MODE */
-      const { router, config } = options
-      self.config = config || null
-      routerPlugin(router)
-      /** Bind components/ to global Vue components; */
-      componentPlugin(GivenVue)
-      if (config) {
-        if (!config.appVersions) config.appVersions = []
-        config.appVersions.push({ name, version, description })
-      }
-      self.instance = GivenVue
-    } else {
-      /** INDEPENDENT MODE */
-      const Vue = createApp(App)
-      /** Vue Pinia */
-      const pinia = createPinia()
-      Vue.use(pinia)
-      Vue.use(router)
-      Vue.use(components)
-      self.instance = Vue
-    }
-  },
-  create() {
-    console.log('create', self.instance)
-    if (self.instance) return null
-    createWebComponent({
-      rootComponent: App,
-      elementName: 'project-zzz',
-      plugins: this,
-      cssFrameworkStyles: requiredStyles,
-      VueDefineCustomElement,
-      h,
-      createApp,
-      getCurrentInstance,
-      // disableStyleRemoval: false, // default is false
-      disableShadowDOM: false, // default is false
-      replaceRootWithHostInCssFramework: true // default is false
-    })
+    const { name, version } = def
+    console.log(name, version, Vue)
   }
+}
+
+try {
+  createWebComponent({
+    rootComponent: App,
+    elementName: 'project-zzz',
+    plugins: self,
+    cssFrameworkStyles: requiredStyles,
+    VueDefineCustomElement,
+    h,
+    createApp: (...args: any) => createApp({ name: 'ZenlessZoneZero', ...args }),
+    getCurrentInstance,
+    disableShadowDOM: true,
+    replaceRootWithHostInCssFramework: true
+  })
+} catch (error: any) {
+  if (error?.name !== 'NotSupportedError') console.error(error)
 }
 
 export default self

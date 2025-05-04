@@ -1,11 +1,3 @@
-// interface iRoute {
-//   path: String
-//   name: String
-//   redirect
-// }
-
-// import { type RouteRecordSingleView, type RouteRecordRedirect } from 'vue-router'
-
 const routes = [
   // {
   //   path: '/about',
@@ -22,20 +14,44 @@ const routes = [
   //   name: 'bangboo',
   //   component: () => import('@/views/bangboo/BangbooIndex.vue')
   // },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   meta: { internalOnly: true },
+  //   component: () => import('@/components/MockTemplate.vue'),
+  //   beforeEnter: () => {
+  //     if (import.meta.env.VITE_PLUGIN !== 'true') return { name: 'movies' }
+  //     // reject the navigation
+  //     return true
+  //   }
+  // },
   {
     path: '/movie',
     name: 'movies',
-    component: () => import('@/views/movie/MovieIndex.vue')
+    component: () => import('@/views/movie/MovieIndex.vue'),
+    children: [
+      {
+        path: '/movie/new',
+        name: 'movieNew',
+        component: () => import('@/views/movie/MovieDetails.vue')
+      },
+      {
+        path: '/movie/:id',
+        name: 'movie',
+        component: () => import('@/views/movie/MovieDetails.vue')
+      }
+    ]
   },
   {
-    path: '/movie/new',
-    name: 'movieNew',
-    component: () => import('@/views/movie/MovieIndex.vue')
-  },
-  {
-    path: '/movie/:id',
-    name: 'movie',
-    component: () => import('@/views/movie/MovieIndex.vue')
+    name: '404',
+    path: '/:pathMatch(.*)*',
+    meta: { internalOnly: true },
+    component: () => import('@/components/MockTemplate.vue')
+    // beforeEnter: () => {
+    //   if (import.meta.env.VITE_PLUGIN !== 'true') return { name: 'movies' }
+    //   // reject the navigation
+    //   return true
+    // }
   }
 ]
 export default routes

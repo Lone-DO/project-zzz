@@ -30,6 +30,7 @@ onUnmounted(() => window.removeEventListener('resize', onResize))
 
 /** General */
 const injectedStyles = computed(() => ({ '--main-height-offset': `${headerHeight.value + footerHeight.value}px` }))
+const isPlugin = computed(() => import.meta.env.VITE_PLUGIN === 'true')
 /** Helpers */
 function isActive(type: string) {
   if (!type) return false;
@@ -44,10 +45,12 @@ function isActive(type: string) {
     </main>
     <header v-show='false' ref='header'>
       <nav>
-        <RouterLink to="/" :data-active='isActive("home")'>Home</RouterLink>
-        <RouterLink to="/about" :data-active='isActive("about")'>About</RouterLink>
-        <RouterLink to="/bangboo" :data-active='isActive("bangboo")'>Bangboo</RouterLink>
-        <RouterLink to="/character" :data-active='isActive("character")'>Characters</RouterLink>
+        <template v-if="!isPlugin">
+          <RouterLink to="/" :data-active='isActive("home")'>Home</RouterLink>
+          <RouterLink to="/about" :data-active='isActive("about")'>About</RouterLink>
+          <RouterLink to="/bangboo" :data-active='isActive("bangboo")'>Bangboo</RouterLink>
+          <RouterLink to="/character" :data-active='isActive("character")'>Characters</RouterLink>
+        </template>
         <RouterLink to="/movie" :data-active='isActive("movie")'>Movies</RouterLink>
       </nav>
     </header>
