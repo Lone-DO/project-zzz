@@ -89,7 +89,7 @@ provide('getCover', (src = '') => {
 #movies {
   width: 100%;
   border-radius: 6px;
-  background-image: url('/src/assets/img/movie-background.webp');
+  background-image: url('@/assets/img/movie-background.webp');
   background-repeat: no-repeat;
   background-size: cover;
 
