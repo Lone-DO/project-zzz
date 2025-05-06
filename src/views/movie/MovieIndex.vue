@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 /** General */
 import { useRoute, useRouter } from 'vue-router'
-import { computed, onMounted, onUnmounted, provide, watch } from 'vue'
+import { computed, onUnmounted, provide, watch } from 'vue'
 const route = useRoute();
 const router = useRouter();
 /** Pinia */
@@ -78,7 +78,7 @@ provide('getCover', (src = '') => {
           </button>
         </div>
         <RouterView :movieId @create='goto("new")' @cancel='goto("all", $event)'
-          @submit='(data, id) => submit(data, id)' />
+          @submit='(data: any, id: any) => submit(data, id)' />
       </aside>
       <MovieList :movieId @select='goto("single", $event)' @deleted='deleted($event)' />
     </div>

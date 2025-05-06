@@ -1,17 +1,14 @@
 <script setup lang='ts'>
 import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured } from 'vue'
-import { RouterLink, RouterView, } from 'vue-router'
-import { useRoute, useRouter } from '@/utils'
+import { RouterLink, RouterView, useRoute, } from 'vue-router'
 
-console.log('mounted')
-const router = useRouter()
 const route = useRoute()
 
 /** Event Lister */
 const header = useTemplateRef('header')
 const footer = useTemplateRef('footer')
-let headerHeight = ref(0);
-let footerHeight = ref(0);
+const headerHeight = ref(0);
+const footerHeight = ref(0);
 
 function onResize(): void {
   headerHeight.value = header.value?.clientHeight || 0

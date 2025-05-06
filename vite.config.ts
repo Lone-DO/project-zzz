@@ -2,23 +2,28 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import vueDevTools from 'vite-plugin-vue-devtools'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  build: {
-    sourcemap: 'inline'
+  server: {
+    port: 8081,
   },
-  plugins: [
-    vue({
-      customElement: true
-    })
-    // vueDevTools()
-  ],
+  plugins: [vue(), vueDevTools()],
+  build: {
+    minify: false,
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        app: './index.html',
+        project: './src/main.ts',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-    }
+    },
   },
   css: {
     preprocessorOptions: {
@@ -28,8 +33,8 @@ export default defineConfig({
           @use "@/assets/styles/_colors.scss" as *;
           @use "@/assets/styles/_variables.scss" as *;
         `,
-        api: 'modern-compiler' // or "modern"
-      }
-    }
-  }
+        api: 'modern-compiler', // or "modern"
+      },
+    },
+  },
 })
