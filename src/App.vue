@@ -1,14 +1,38 @@
 <script setup lang='ts'>
-import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured } from 'vue'
-import { RouterLink, RouterView, useRoute, } from 'vue-router'
+import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured, watch } from 'vue'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
+import config from './assets/common/config'
 
 const route = useRoute()
+const router = useRouter()
 
 /** Event Lister */
 const header = useTemplateRef('header')
 const footer = useTemplateRef('footer')
 const headerHeight = ref(0);
 const footerHeight = ref(0);
+const isRendering = ref(false)
+
+
+const props = defineProps({ path: { type: String, default: null } })
+
+watch(
+  () => props.path,
+  (path) => {
+    console.log('watch:path', path, config)
+    try {
+      const sanitized = config.sanitizeRoute(path)
+      if (!sanitized) {
+        return (isRendering.value = false)
+      } else {
+        router.replace(sanitized)
+        return (isRendering.value = true)
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+)
 
 function onResize(): void {
   headerHeight.value = header.value?.clientHeight || 0
@@ -36,7 +60,7 @@ function isActive(type: string) {
 </script>
 
 <template>
-  <section id='project-zzz'>
+  <section id='project-zzz' v-if="isRendering">
     <main :style='injectedStyles'>
       <RouterView />
     </main>
