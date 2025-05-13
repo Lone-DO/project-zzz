@@ -6,6 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 // https://vite.dev/config/
 export default defineConfig(({ mode }): UserConfig => {
   return {
+    base: mode === 'production' ? '/ZZZ/dist/' : './',
     esbuild: {
       // Remove debugger statements in production
       drop: mode === 'production' ? ['debugger'] : [],
@@ -43,6 +44,8 @@ export default defineConfig(({ mode }): UserConfig => {
         input: {
           app: './index.html',
           'project-zzz': './src/main.ts',
+          routes: './src/router/index.ts',
+          config: './src/assets/common/config.ts',
         },
         output: {
           name: 'project-zzz',
@@ -55,7 +58,9 @@ export default defineConfig(({ mode }): UserConfig => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    assetsInclude: ['**/assets/**/*.[svg|webp]'],
     css: {
+      devSourcemap: true,
       preprocessorOptions: {
         scss: {
           additionalData: `
