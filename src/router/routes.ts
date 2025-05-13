@@ -30,17 +30,17 @@ const routes = [
   {
     path: '/movie',
     name: 'movies',
-    component: () => import('../views/movie/MovieIndex.vue'),
+    component: () => import('@/views/movie/MovieIndex.vue'),
     children: [
       {
         path: '/movie/new',
         name: 'movieNew',
-        component: () => import('../views/movie/MovieDetails.vue'),
+        component: () => import('@/views/movie/MovieDetails.vue'),
       },
       {
         path: '/movie/:id',
         name: 'movie',
-        component: () => import('../views/movie/MovieDetails.vue'),
+        component: () => import('@/views/movie/MovieDetails.vue'),
       },
     ],
   },

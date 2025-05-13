@@ -11,23 +11,15 @@ const header = useTemplateRef('header')
 const footer = useTemplateRef('footer')
 const headerHeight = ref(0);
 const footerHeight = ref(0);
-const isRendering = ref(false)
-
 
 const props = defineProps({ path: { type: String, default: null } })
 
 watch(
   () => props.path,
   (path) => {
-    console.log('watch:path', path, config)
     try {
       const sanitized = config.sanitizeRoute(path)
-      if (!sanitized) {
-        return (isRendering.value = false)
-      } else {
-        router.replace(sanitized)
-        return (isRendering.value = true)
-      }
+      if (sanitized) router.replace(sanitized)
     } catch (err) {
       console.error(err)
     }
@@ -60,7 +52,7 @@ function isActive(type: string) {
 </script>
 
 <template>
-  <section id='project-zzz' v-if="isRendering">
+  <section id='project-zzz'>
     <main :style='injectedStyles'>
       <RouterView />
     </main>

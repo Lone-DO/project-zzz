@@ -32,7 +32,6 @@ const self = {
     routes,
   }),
   baseUrl: config.baseUrl,
-  homeRoute: config.isPlugin ? '/zzz' : '/',
   name: 'zzz',
   config,
   instance: null,
@@ -45,6 +44,8 @@ const self = {
     Vue.use(this.router)
     /** Global Components Registry */
     Vue.use(Components)
+    Vue.component('font-awesome-icon', FontAwesomeIcon)
+
     this.instance = Vue
 
     console.log(name, version, this)
@@ -52,23 +53,17 @@ const self = {
 }
 
 try {
-  if (config.isPlugin) {
-    createWebComponent({
-      rootComponent: App,
-      elementName: 'project-zzz',
-      plugins: self,
-      VueDefineCustomElement,
-      h,
-      createApp: (...args: unknown[]) => createApp({ name, ...args }),
-      getCurrentInstance,
-      disableShadowDOM: true,
-      replaceRootWithHostInCssFramework: false,
-    })
-  } else {
-    const app = createApp({ name, ...App })
-    self.install(app)
-    app.component('font-awesome-icon', FontAwesomeIcon).mount('#app')
-  }
+  createWebComponent({
+    rootComponent: App,
+    elementName: 'project-zzz',
+    plugins: self,
+    VueDefineCustomElement,
+    h,
+    createApp: (...args: unknown[]) => createApp({ ...args, name }),
+    getCurrentInstance,
+    disableShadowDOM: true,
+    replaceRootWithHostInCssFramework: false,
+  })
 } catch (error: any) {
   if (error?.name !== 'NotSupportedError') console.error(error)
 }
