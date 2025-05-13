@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  defineCustomElement as VueDefineCustomElement,
-  h,
-  createApp,
-  getCurrentInstance,
-} from 'vue'
+import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
 import { createWebComponent } from 'vue-web-component-wrapper'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
@@ -48,7 +43,7 @@ const self = {
 
     this.instance = Vue
 
-    console.log(name, version, this)
+    // console.log(name, version, this)
   },
 }
 
