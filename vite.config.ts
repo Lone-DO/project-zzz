@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, UserConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
@@ -43,14 +43,15 @@ export default defineConfig(({ mode }): UserConfig => {
       rollupOptions: {
         input: {
           app: './index.html',
-          'project-zzz': './src/main.ts',
-          routes: './src/router/index.ts',
-          config: './src/assets/common/config.ts',
+          'src/main': './src/main.ts',
+          'router/index': './src/router/index.ts',
+          'assets/common/config': './src/assets/common/config.ts',
         },
         output: {
           name: 'project-zzz',
           entryFileNames: (chunk) => `${[chunk.name]}.js`,
         },
+        preserveEntrySignatures: 'strict',
       },
     },
     resolve: {

@@ -37,7 +37,6 @@ onErrorCaptured((err, vm) => {
 
 onMounted(() => {
   window.addEventListener('resize', onResize)
-  config.enableDevTools()
   onResize()
 })
 onUnmounted(() => window.removeEventListener('resize', onResize))
