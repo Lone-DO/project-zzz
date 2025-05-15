@@ -15,7 +15,7 @@ const props = defineProps({
 
 const movie = ref();
 const isNew = computed(() => props.movieId === 'new')
-let isEditing = ref(!!isNew.value)
+const isEditing = ref(!!isNew.value)
 
 /** Watchers */
 watch(

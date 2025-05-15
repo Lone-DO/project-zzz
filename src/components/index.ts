@@ -1,9 +1,12 @@
-import zButton from './button/zButton.vue'
+import ZButton from './button/ZButton.vue'
+export * as MockTemplate from './MockTemplate.vue'
 
-const components = {
-  install(Vue: any) {
-    Vue.component('ZButton', zButton)
-  }
+export function plugin(GivenVue: any) {
+  if (!GivenVue) return null
+  GivenVue.component('ZButton', ZButton)
 }
 
-export { components as default, zButton }
+export default {
+  install: plugin,
+  ZButton
+}

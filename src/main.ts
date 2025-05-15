@@ -1,18 +1,68 @@
-import { createApp } from 'vue'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
+import { createWebComponent } from 'vue-web-component-wrapper'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
+/** General */
+import App from '@/App.vue'
+import config from '@/assets/common/config'
+/** Register component version to Global State */
+import def from '../package.json'
+const { name, version } = def
+/** Assets */
+import Components from '@/components'
+/** Plugins */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
-import App from './App.vue'
-import router from './router'
-import components from './components'
+library.add(fas)
+/** Generate Route Factory before initializing Plugins */
+import _routeFactory from './router'
+const routes = _routeFactory()
 
-import './assets/styles/main.scss'
+const self = {
+  router: createRouter({
+    history: config.isPlugin ? createWebHistory(config.baseUrl) : createWebHashHistory(config.baseUrl),
+    routes,
+  }),
+  baseUrl: config.baseUrl,
+  name: 'zzz',
+  config,
+  instance: null,
+  component: App,
+  components: Components,
+  install(Vue: any) {
+    /** Vue Pinia */
+    Vue.use(createPinia())
+    /** Vue Router */
+    Vue.use(this.router)
+    /** Global Components Registry */
+    Vue.use(Components)
+    Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-const app = createApp(App)
+    this.instance = Vue
 
-app.use(createPinia())
-app.use(router)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(name, version, this.instance)
+    }
+  },
+}
 
-// Bind components/ to global Vue components;
-app.use(components)
+try {
+  createWebComponent({
+    rootComponent: App,
+    elementName: 'project-zzz',
+    plugins: self,
+    VueDefineCustomElement,
+    h,
+    createApp: (...args: unknown[]) => createApp({ ...args, name }),
+    getCurrentInstance,
+    disableShadowDOM: true,
+    replaceRootWithHostInCssFramework: false,
+  })
+} catch (error: any) {
+  if (error?.name !== 'NotSupportedError') console.error(error)
+}
 
-app.mount('#app')
+export default self

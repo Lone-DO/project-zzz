@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 /** General */
 import { useRoute, useRouter } from 'vue-router'
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onUnmounted, provide, watch } from 'vue'
 const route = useRoute();
 const router = useRouter();
 /** Pinia */
@@ -9,7 +9,6 @@ import { useMovieStore } from '@/stores/movie';
 const $store = useMovieStore()
 /** Components */
 import MovieList from './MovieList.vue';
-import MovieDetails from './MovieDetails.vue';
 import type Movie from '@/assets/models/Movie';
 /** Setup */
 $store.unpack()
@@ -39,6 +38,34 @@ function deleted(movie: Movie) {
   $store.remove(movie);
   goto('all', true)
 }
+
+/** Aggregate Imag Covers **/
+
+const coverRegex = /(.+\/covers\/)(.+)/gm
+
+function aggregateCovers() {
+  try {
+    /** Aggregate all files that are named `routes.js` nested within the `modules` Directory */
+    const context = import.meta.glob('../../assets/img/covers/**/*', { eager: true, import: 'default' });
+    return Object.keys(context).reduce((covers, filePath) => {
+      const img = context[filePath]
+      const id = filePath.replace(coverRegex, '$2');
+      return { ...covers, [id]: img }
+    }, []);
+  } catch (error) {
+    console.error(error)
+    return {}
+  }
+}
+
+const covers: object = aggregateCovers()
+
+provide('covers', covers);
+provide('getCover', (src = '') => {
+  const id: string = src.replace(coverRegex, '$2');
+  return (covers || {})[id as keyof object]
+});
+
 </script>
 
 <template>
@@ -50,8 +77,8 @@ function deleted(movie: Movie) {
             <i class='fa-solid fa-close' />
           </button>
         </div>
-        <MovieDetails :movieId @create='goto("new")' @cancel='goto("all", $event)'
-          @submit='(data, id) => submit(data, id)' />
+        <RouterView :movieId @create='goto("new")' @cancel='goto("all", $event)'
+          @submit='(data: any, id: any) => submit(data, id)' />
       </aside>
       <MovieList :movieId @select='goto("single", $event)' @deleted='deleted($event)' />
     </div>
@@ -62,7 +89,7 @@ function deleted(movie: Movie) {
 #movies {
   width: 100%;
   border-radius: 6px;
-  background-image: url('/src/assets/img/movie-background.webp');
+  background-image: url('@/assets/img/movie-background.webp');
   background-repeat: no-repeat;
   background-size: cover;
 
