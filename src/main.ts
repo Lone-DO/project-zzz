@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
 import { createWebComponent } from 'vue-web-component-wrapper'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 /** General */
 import App from '@/App.vue'
@@ -23,7 +23,7 @@ const routes = _routeFactory()
 
 const self = {
   router: createRouter({
-    history: createWebHistory(config.baseUrl),
+    history: config.isPlugin ? createWebHistory(config.baseUrl) : createWebHashHistory(config.baseUrl),
     routes,
   }),
   baseUrl: config.baseUrl,
@@ -42,8 +42,6 @@ const self = {
     Vue.component('font-awesome-icon', FontAwesomeIcon)
 
     this.instance = Vue
-
-    // console.log(name, version, this)
   },
 }
 

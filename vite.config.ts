@@ -2,11 +2,14 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import config from './src/assets/common/config'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }): UserConfig => {
+  config.isPlugin = mode === 'plugin'
+  config.init(mode)
   return {
-    base: mode === 'production' ? '/ZZZ/dist/' : './',
+    base: config.isPlugin ? '/project-zzz/dist/' : './',
     esbuild: {
       // Remove debugger statements in production
       drop: mode === 'production' ? ['debugger'] : [],
