@@ -42,6 +42,10 @@ const self = {
     Vue.component('font-awesome-icon', FontAwesomeIcon)
 
     this.instance = Vue
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(name, version, this.instance)
+    }
   },
 }
 
