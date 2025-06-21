@@ -4,6 +4,7 @@ const config = {
   baseUrl: '/',
   isPlugin: false,
   name: 'project-zzz',
+  logo: 'https://upload-os-bbs.hoyolab.com/upload/2022/06/13/100427891/e8dd8dccf42ef711a7636f8acb2e88a1_1247066826655080311.png',
   init(mode: string) {
     this.mode = mode
     this.baseUrl = mode === 'plugin' ? '/projects/zzz' : '/'
