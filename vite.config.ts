@@ -40,6 +40,7 @@ export default defineConfig(({ mode }): UserConfig => {
       },
     ],
     build: {
+      outDir: 'docs',
       emptyOutDir: true,
       minify: false,
       sourcemap: true,
