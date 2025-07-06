@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const getCover = <(src: string) => string | unknown>inject('getCover')
-const getImgCover = (src = '') => (getCover instanceof Function ? getCover(src) : src)
+const getImgCover = (src = '') => (getCover instanceof Function ? (getCover(src) as string) : src)
 
 const isActive = computed(() => route.params.id === props.movie.name)
 const isOriginal = computed(() => /^\/src\/assets/gm.test(props.movie.imgSource))
