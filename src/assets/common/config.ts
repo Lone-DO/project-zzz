@@ -3,11 +3,14 @@ const config = {
   mode: '',
   baseUrl: '/',
   isPlugin: false,
+  isProduction: false,
   name: 'project-zzz',
   init(mode: string) {
     this.mode = mode
+    this.isPlugin = mode === 'plugin'
+    this.isProduction = mode === 'production'
     this.baseUrl = mode === 'plugin' ? '/projects/zzz' : '/'
-    return this.baseUrl
+    return Promise.resolve(this.baseUrl)
   },
   sanitizeRoute(path: string) {
     if (!path.includes(this.baseUrl)) return false

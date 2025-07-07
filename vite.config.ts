@@ -5,11 +5,10 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import config from './src/assets/common/config'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }): UserConfig => {
-  config.isPlugin = mode === 'plugin'
-  config.init(mode)
+export default defineConfig(async ({ mode }): Promise<UserConfig> => {
+  await config.init(mode)
   return {
-    base: config.isPlugin ? '/project-zzz/dist/' : './',
+    base: config.isPlugin ? '/project-zzz/dist/' : config.isProduction ? '/project-zzz/' : './',
     esbuild: {
       // Remove debugger statements in production
       drop: mode === 'production' ? ['debugger'] : [],
@@ -40,7 +39,6 @@ export default defineConfig(({ mode }): UserConfig => {
       },
     ],
     build: {
-      outDir: 'docs',
       emptyOutDir: true,
       minify: false,
       sourcemap: true,
