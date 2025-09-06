@@ -1,9 +1,10 @@
-interface Bangboo {
+interface iBangboo {
   id: number | null
 }
 
 class Bangboo {
-  constructor(data: Bangboo) {
+  id: number | null
+  constructor(data: iBangboo) {
     this.id = data.id || null
   }
 }

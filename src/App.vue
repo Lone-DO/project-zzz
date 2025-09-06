@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured, watch } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import config from './assets/common/config'
@@ -9,10 +9,10 @@ const router = useRouter()
 /** Event Lister */
 const header = useTemplateRef('header')
 const footer = useTemplateRef('footer')
-const headerHeight = ref(0);
-const footerHeight = ref(0);
+const headerHeight = ref(0)
+const footerHeight = ref(0)
 
-const props = defineProps({ path: { type: String, default: null } })
+const props = defineProps({ path: { type: String, default: null }, styles: { type: Object, default: null } })
 
 watch(
   () => props.path,
@@ -23,7 +23,7 @@ watch(
     } catch (err) {
       console.error(err)
     }
-  }
+  },
 )
 
 function onResize(): void {
@@ -42,40 +42,44 @@ onMounted(() => {
 onUnmounted(() => window.removeEventListener('resize', onResize))
 
 /** General */
-const injectedStyles = computed(() => ({ '--main-height-offset': `${headerHeight.value + footerHeight.value}px` }))
+const injectedStyles = computed(() => {
+  const opts = {
+    '--main-height-offset': `${headerHeight.value + footerHeight.value}px`,
+    '--view-height-override': props.styles?.maxHeight ? props.styles.maxHeight : '100vh',
+  }
+  return { ...opts, '--max-height': `calc(${opts['--view-height-override']} - ${opts['--main-height-offset']})` }
+})
 const isPlugin = computed(() => import.meta.env.VITE_PLUGIN === 'true')
 /** Helpers */
 function isActive(type: string) {
-  if (!type) return false;
+  if (!type) return false
   return type === 'home' ? route?.fullPath === '/' : route?.fullPath.includes(type)
 }
 </script>
 
 <template>
-  <section id='project-zzz'>
-    <main :style='injectedStyles'>
+  <section id="project-zzz">
+    <main :style="injectedStyles">
       <RouterView />
     </main>
-    <header v-show='false' ref='header'>
+    <header v-if="false" ref="header">
       <nav>
         <template v-if="!isPlugin">
-          <RouterLink to="/" :data-active='isActive("home")'>Home</RouterLink>
-          <RouterLink to="/about" :data-active='isActive("about")'>About</RouterLink>
-          <RouterLink to="/bangboo" :data-active='isActive("bangboo")'>Bangboo</RouterLink>
-          <RouterLink to="/character" :data-active='isActive("character")'>Characters</RouterLink>
+          <RouterLink to="/" :data-active="isActive('home')">Home</RouterLink>
+          <RouterLink to="/about" :data-active="isActive('about')">About</RouterLink>
+          <RouterLink to="/bangboo" :data-active="isActive('bangboo')">Bangboo</RouterLink>
+          <RouterLink to="/character" :data-active="isActive('character')">Characters</RouterLink>
         </template>
-        <RouterLink to="/movie" :data-active='isActive("movie")'>Movies</RouterLink>
+        <RouterLink to="/movie" :data-active="isActive('movie')">Movies</RouterLink>
       </nav>
     </header>
-    <footer ref='footer'>
+    <footer ref="footer">
       <i>This Project is not affiliated with HoYoverse and all assets are the property of their respective owners.</i>
     </footer>
   </section>
 </template>
 
-<style lang='scss' scoped>
-$MAX_HEIGHT: calc(100vh - var(--main-height-offset));
-
+<style lang="scss" scoped>
 header {
   padding: 16px 32px;
 
@@ -89,7 +93,7 @@ header {
       border-radius: 8px;
       font-weight: $FONT_WEIGHT;
 
-      &[data-active="true"] {
+      &[data-active='true'] {
         outline: $HIGHLIGHT_BORDER;
       }
     }
@@ -101,14 +105,17 @@ main,
 footer {
   width: 100%;
   background-color: black;
+  color: white;
 }
 
 footer {
-  text-align: center;
+  text-align: left;
+  position: relative;
+  padding: 8px;
 }
 
 main {
   width: 100%;
-  height: $MAX_HEIGHT;
+  height: var(--max-height);
 }
 </style>

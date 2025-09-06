@@ -28,6 +28,7 @@ const self = {
   }),
   baseUrl: config.baseUrl,
   name: 'zzz',
+  elementName: 'project-zzz',
   config,
   instance: null,
   component: App,
@@ -52,7 +53,7 @@ const self = {
 try {
   createWebComponent({
     rootComponent: App,
-    elementName: 'project-zzz',
+    elementName: self.elementName,
     plugins: self,
     VueDefineCustomElement,
     h,
