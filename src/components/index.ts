@@ -1,7 +1,7 @@
 import ZButton from './button/ZButton.vue'
 export * as MockTemplate from './MockTemplate.vue'
-
-export function plugin(GivenVue: any) {
+import { createApp } from 'vue'
+export function plugin(GivenVue: ReturnType<typeof createApp> | null) {
   if (!GivenVue) return null
   GivenVue.component('ZButton', ZButton)
 }
