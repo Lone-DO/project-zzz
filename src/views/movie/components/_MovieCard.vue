@@ -10,7 +10,7 @@ const props = defineProps({
   movie: { type: Object as PropType<IMovie>, required: true },
 })
 
-const getCover: Function | undefined = inject('getCover')
+const getCover: ((src: string) => string) | undefined = inject('getCover')
 const getImgCover = (src = '') => getCover instanceof Function ? getCover(src) : src
 
 const isActive = computed(() => route.params.id === props.movie.name)

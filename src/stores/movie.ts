@@ -15,7 +15,8 @@ export const useMovieStore = defineStore('movie', {
     async update(movie: Movie, movieId: string) {
       if (!movie) return this.movies
       const index = !movieId ? -1 : this.movies.findIndex(({ name }) => name === movieId)
-      index >= 0 ? this.movies.splice(index, 1, movie) : this.movies.push(movie)
+      if (index >= 0) this.movies.splice(index, 1, movie)
+      else this.movies.push(movie)
       this.pack()
     },
     async remove(movie: Movie | string) {
