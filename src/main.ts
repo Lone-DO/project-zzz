@@ -11,12 +11,6 @@ import def from '../package.json'
 const { name, version } = def
 /** Assets */
 import Components from '@/components'
-/** Plugins */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-
-library.add(fas)
 /** Generate Route Factory before initializing Plugins */
 import _routeFactory from './router'
 const routes = _routeFactory()
@@ -39,7 +33,6 @@ const self = {
     Vue.use(this.router)
     /** Global Components Registry */
     Vue.use(Components)
-    Vue.component('font-awesome-icon', FontAwesomeIcon)
 
     this.instance = Vue
 

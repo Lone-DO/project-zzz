@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -19,7 +18,7 @@ const injectedStyles = computed(() => ({
   <button class='z-button' type='button' :style='injectedStyles' :data-mode='mode'>
     <div v-if='icon' class='z-button__icon-container'>
       <div class='z-button__icon'>
-        <FontAwesomeIcon :icon="[prefix, icon]" />
+        <i :class="`${prefix} ${prefix}-${icon}`" />
       </div>
     </div>
     <span>
