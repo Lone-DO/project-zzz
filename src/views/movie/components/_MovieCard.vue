@@ -19,7 +19,7 @@ const isOriginal = computed(() => /^\/src\/assets/gm.test(props.movie.imgSource)
 </script>
 
 <template>
-  <article class='movie-card'>
+  <article class='movie-card' :data-custom='!isOriginal'>
     <h3>{{ movie.name }}</h3>
     <div v-if='!isOriginal' class='movie-card__close' @click.stop='$emit("deleted", movie.name)'>
       <i class='fa-solid fa-close' />
@@ -38,6 +38,10 @@ $HEIGHT: 292px;
 
 .movie-card {
   text-align: center;
+
+  &[data-custom="true"] {
+    position: relative;
+  }
 
   &,
   &__vhs {

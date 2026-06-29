@@ -1,8 +1,8 @@
 <script setup lang='ts'>
+import '@/assets/vendor/fontawesome-free-7.3.0-web/js/all.min.js'
 import { onMounted, onUnmounted, useTemplateRef, ref, computed, onErrorCaptured, watch } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import config from './assets/common/config'
-
 const route = useRoute()
 const router = useRouter()
 
@@ -74,6 +74,8 @@ function isActive(type: string) {
 </template>
 
 <style lang='scss' scoped>
+@import '@/assets/vendor/fontawesome-free-7.3.0-web/css/all.min.css';
+
 $MAX_HEIGHT: calc(100vh - var(--main-height-offset));
 
 header {
